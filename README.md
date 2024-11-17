@@ -100,7 +100,7 @@ your_dataset/
 ├── dataset_split.json
 └── downstream.csv
 ```
-## To fineture
+## [To fineture]()
 You can download pre-trained MCRT and finetuned models in the paper via figshare [here](https://figshare.com/articles/online_resource/Pretrained_MCRT_models/27822705)
 ```python
 import MCRT
@@ -140,7 +140,7 @@ conda activate MCRT
 python /path/to/finetune.py
 ```
 
-## To test finetuned model
+## [To test finetuned model]()
 Set test_only as True, also set test_to_csv to True if you want to save the test results
 ```python
 import MCRT
@@ -182,7 +182,7 @@ conda activate MCRT
 python /path/to/test_model.py
 ```
 
-## Attention score visualization
+## [Attention score visualization]()
 MCRT takes atomic graph (local) and persistence image patches (global) as input, the model structure is shown below:
 ![alt text](MCRT/assets/MCRT.png)
 The attention score on each atom and patch can be visualized as below:
@@ -211,5 +211,5 @@ python /path/to/visual.py
   <img src="MCRT/assets/image_attention_2D.png" alt="2D persistence Atomic attention" width="250"/>
 </div>
 
-## Acknowledgement
+## [Acknowledgement]()
 This repo is built upon the previous work MOFTransformer's [codebase](https://github.com/hspark1212/MOFTransformer). Thank you very much for the excellent codebase.
