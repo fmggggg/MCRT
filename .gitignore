@@ -7,8 +7,6 @@ compared_models/Crystal-Twins
 # C extensions
 *.zip
 *.so
-*.cif
-*.pickle
 *.csv
 *.out
 *.sh
