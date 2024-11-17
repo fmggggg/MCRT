@@ -1,5 +1,6 @@
-# MCRT
-Molecular Crystal Representation from Transformer
+# 🔥 MCRT: A Universal Foundation Model for Transfer Learning in Molecular Crystals 🚀
+This repository hosts **Molecular Crystal Representation from Transformers (MCRT)**, a transformer-based model designed for property prediction of molecular crystals. Pre-trained on over 700,000 experimental structures from the Cambridge Crystallographic Data Centre (CCDC), MCRT extracts both local and global representations of crystals using multi-modal features, achieving state-of-the-art performance on various property prediction tasks with minimal fine-tuning. Explore this repository to accelerate your research in molecular crystal discovery and functionality prediction.
+
 
 ## Install
 #### Option 1: Directly install
@@ -15,7 +16,7 @@ cd /path/to/MCRT
 pip install -r requirements.txt
 ```
 #### Option 2: Via Apptainer (easier and faster)
-It would be easier to use Apptainer [(install from here)](https://apptainer.org/docs/user/main/quick_start.html) because you don't have to deal with any unexpected errors when you install the environment. You only have to install apptainer, and we provided the pre-defined images [here]().
+It would be easier to use Apptainer [(install from here)](https://apptainer.org/docs/user/main/quick_start.html) because you don't have to deal with any unexpected errors when you install the environment. You only have to install apptainer, and we provided the pre-defined images [here](https://figshare.com/articles/online_resource/Containers_for_MCRT_and_moleculetda/26390275).
 
 ## Prepare dataset
 #### Prepare persistence images
@@ -31,7 +32,7 @@ Usage:
 ```python
 conda activate persistent
 cd /path/to/moleculetda/src
-python -m moleculetda.cif_to_image --cif_path ../cifs/your_cif_folder --paral 16
+python /path/to/cif_to_image.py --cif_path ../cifs/your_cif_folder --paral 16
 ```
 You can parallal the generation by setting --paral.
 ##### Option 2: Via Apptainer (easier and faster)
