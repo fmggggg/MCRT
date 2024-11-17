@@ -2,30 +2,34 @@
 This repository hosts **Molecular Crystal Representation from Transformers (MCRT)**, a transformer-based model designed for property prediction of molecular crystals. Pre-trained on over 700,000 experimental structures from the Cambridge Crystallographic Data Centre (CCDC), MCRT extracts both local and global representations of crystals using multi-modal features, achieving state-of-the-art performance on various property prediction tasks with minimal fine-tuning. Explore this repository to accelerate your research in molecular crystal discovery and functionality prediction.
 ![alt text](MCRT/assets/overall3.png)
 
-## Install
-#### Option 1: Directly install
+## [Install MCRT-tools]()
+### Option 1: Via Apptainer (easier and faster) 🚀
+It would be easier to use Apptainer [(install from here)](https://apptainer.org/docs/user/main/quick_start.html) because you don't have to deal with any unexpected errors when you install the environment. You only have to install apptainer, and we provided the pre-defined images [here](https://figshare.com/articles/online_resource/Containers_for_MCRT_and_moleculetda/26390275).
+
+### Option 2: Directly install
 1. Create a Conda environment with Python 3.8:
 ```python
 conda create -y -n MCRT python=3.8
 conda activate MCRT
 ```
 2. Install PyTorch=2.1.1 [(from here)](https://pytorch.org/get-started/previous-versions/) and DGL [(from here)](https://www.dgl.ai/pages/start.html) based on your CUDA version and OS.
-3. Install other packages:
+3. Install other packages and MCRT:
 ```python
 cd /path/to/MCRT
 pip install -r requirements.txt
-```
-4. Install MCRT
-```python
 pip install MCRT-tools==1.0.1
 ```
-#### Option 2: Via Apptainer (easier and faster)
-It would be easier to use Apptainer [(install from here)](https://apptainer.org/docs/user/main/quick_start.html) because you don't have to deal with any unexpected errors when you install the environment. You only have to install apptainer, and we provided the pre-defined images [here](https://figshare.com/articles/online_resource/Containers_for_MCRT_and_moleculetda/26390275).
-
-## Prepare dataset
-#### Prepare persistence images
+## [Prepare dataset]()
+### Prepare persistence images
 The persistence images are generated using adapted [moleculetda](https://github.com/a1k12/moleculetda). We also provide 2 options to install it.
-##### Option 1: Directly install
+#### Option 1: Via Apptainer (easier and faster) 🚀
+Download the pre-defined image [here](https://figshare.com/articles/online_resource/Containers_for_MCRT_and_moleculetda/26390275).
+Usage:
+```python
+cd /path/to/moleculetda
+apptainer exec /path/to/moleculetda_container.sif python3 /path/to/cif_to_image.py --cif_path /path/to/cif_path
+```
+#### Option 2: Directly install
 Create a Conda environment with Python 3.11:
 ```python
 conda create -y -n persistent python=3.11
@@ -38,14 +42,8 @@ conda activate persistent
 python /path/to/cif_to_image.py --cif_path ../cifs/your_cif_folder --paral 16
 ```
 You can parallal the generation by setting --paral.
-##### Option 2: Via Apptainer (easier and faster)
-Download the pre-defined image [here](https://figshare.com/articles/online_resource/Containers_for_MCRT_and_moleculetda/26390275).
-Usage:
-```python
-cd /path/to/moleculetda
-apptainer exec /path/to/moleculetda_container.sif python3 /path/to/cif_to_image.py --cif_path /path/to/cif_path
-```
-#### Prepare pickles (optional)
+
+### Prepare pickles (optional)
 Pickles include the pre-calculated positional embedding matrix and pre-training labels. It's an optional procedure for finetuning now because we have implemented the generation of graphs in real time for finetuneing. But for pretraining, the label for tasks are time-consuming to generate, it should be generated like this:
 ```python
 conda activate MCRT
@@ -56,7 +54,7 @@ You can generate pickle for fintuning too, which may be a little bit faster than
 conda activate MCRT
 python /path/to/cif_to_dataset.py --cif_path /path/to/cif_path --paral 16 --type finetune 
 ```
-#### dataset split
+### dataset split
 The dataset split is defined by a json file named dataset_split.json:
 ```json
 {
@@ -69,7 +67,7 @@ One can generate it by yourself or by using split_dataset.py which we provided.
 ```python
 python /path/to/split_dataset.py --cif /path/to/cif_path --split 0.8 0.1 0.1
 ```
-#### dataset structure
+### dataset structure
 
 When you finished the generation above, you should make sure the dataset structure is like this: 
 ```
@@ -80,7 +78,7 @@ your_dataset/
 ├── dataset_split.json
 └── downstream.csv
 ```
-## To fineture
+## [To fineture]()
 ```python
 import MCRT
 import os
@@ -118,7 +116,7 @@ make a python file named finetune.py and run it:
 conda activate MCRT
 python /path/to/finetune.py
 ```
-## To test finetuned model
+## [To test finetuned model]()
 Set test_only as True, also set test_to_csv to True if you want to save the test results
 ```python
 import MCRT
@@ -160,7 +158,7 @@ conda activate MCRT
 python /path/to/test_model.py
 ```
 
-## Attention score visualization
+## [Attention score visualization]()
 The attention score on each atom and patch can be visualized as below:
 ```python
 from MCRT.visualize import PatchVisualizer
@@ -189,5 +187,5 @@ python /path/to/visual.py
   <img src="MCRT/assets/image_attention_2D.png" alt="2D persistence Atomic attention" width="250"/>
 </div>
 
-## Acknowledgement
+## [Acknowledgement]()
 This repo is built upon the previous work MOFTransformer's [codebase](https://github.com/hspark1212/MOFTransformer). Thank you very much for the excellent codebase.
