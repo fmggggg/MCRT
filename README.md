@@ -158,8 +158,33 @@ python /path/to/test_model.py
 ```
 
 ## Attention score visualization
+The attention score on each atom and patch can be visualized as below:
+```python
+from MCRT.visualize import PatchVisualizer
+import os
+__root_dir__ = os.path.dirname(__file__)
+model_path = "path/to/finetuned model"
+data_path = "path/to/dataset containing the crystal" # have to prepare pickles
+
+cifname = 'crystal name' # make sure it's in the test split, and its pickle exists
+
+vis = PatchVisualizer.from_cifname(cifname, model_path, data_path,save_heatmap=True)
+vis.draw_graph()
+vis.draw_image_1d(top_n=10)
+vis.draw_image_2d(top_n=10)
+```
+Usage:
+make a python file named visual.py and run it:
+```python
+conda activate MCRT
+python /path/to/visual.py
+```
+
 <div style="display: flex; justify-content: space-around; align-items: center;">
   <img src="MCRT/assets/atomic_attention.png" alt="Atomic attention" width="250"/>
   <img src="MCRT/assets/image_attention_1D.png" alt="1D persistence image attention" width="250"/>
   <img src="MCRT/assets/image_attention_2D.png" alt="2D persistence Atomic attention" width="250"/>
 </div>
+
+## Acknowledgement
+This repo is built upon the previous work MOFTransformer's [codebase](https://github.com/hspark1212/MOFTransformer). Thank you very much for the excellent codebase.

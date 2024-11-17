@@ -1,6 +1,5 @@
 from MCRT.visualize import PatchVisualizer
 import os
-print(1)
 __root_dir__ = os.path.dirname(__file__)
 model_path = "D:/Projects/MyProjects/MCRT/logs/finetune/charge_mobility/epoch=33-step=986.ckpt"
 data_path = "D:/Projects/MyProjects/MCRT/MCRT/cifs/charge_mobility"
