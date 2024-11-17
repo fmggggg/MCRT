@@ -101,6 +101,7 @@ your_dataset/
 └── downstream.csv
 ```
 ## To fineture
+You can download pre-trained MCRT and finetuned models in the paper via figshare [here](https://figshare.com/articles/online_resource/Pretrained_MCRT_models/27822705)
 ```python
 import MCRT
 import os
