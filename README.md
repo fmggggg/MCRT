@@ -159,7 +159,7 @@ python /path/to/test_model.py
 
 ## Attention score visualization
 <div style="display: flex; justify-content: space-around; align-items: center;">
-  <img src="MCRT/assets/atomic_attention.png" alt="Atomic attention" width="300"/>
-  <img src="MCRT/assets/image_attention_1D.png" alt="1D persistence image attention" width="300"/>
-  <img src="MCRT/assets/image_attention_2D.png" alt="2D persistence Atomic attention" width="300"/>
+  <img src="MCRT/assets/atomic_attention.png" alt="Atomic attention" width="250"/>
+  <img src="MCRT/assets/image_attention_1D.png" alt="1D persistence image attention" width="250"/>
+  <img src="MCRT/assets/image_attention_2D.png" alt="2D persistence Atomic attention" width="250"/>
 </div>
