@@ -1,6 +1,8 @@
 # 🔥 MCRT: A Universal Foundation Model for Transfer Learning in Molecular Crystals 🚀
 This repository hosts **Molecular Crystal Representation from Transformers (MCRT)**, a transformer-based model designed for property prediction of molecular crystals. Pre-trained on over 700,000 experimental structures from the Cambridge Crystallographic Data Centre (CCDC), MCRT extracts both local and global representations of crystals using multi-modal features, achieving state-of-the-art performance on various property prediction tasks with minimal fine-tuning. Explore this repository to accelerate your research in molecular crystal discovery and functionality prediction.
-
+<div style="display: flex; justify-content: space-around; align-items: center;">
+  <img src="MCRT/assets/overall3.png" alt="Atomic attention" width="700"/>
+</div>
 
 ## Install
 #### Option 1: Directly install
@@ -70,13 +72,16 @@ One can generate it by yourself or by using split_dataset.py which we provided.
 python /path/to/split_dataset.py --cif /path/to/cif_path --split 0.8 0.1 0.1
 ```
 #### dataset structure
+
 When you finished the generation above, you should make sure the dataset structure is like this: 
+```
 your_dataset/
 ├── cifs/containing cif files
 ├── imgs/containing persistence images
 ├── pickles/(optional for finetuning) containing pickles
 ├── dataset_split.json
 └── downstream.csv
+```
 ## To fineture
 ```python
 import MCRT
