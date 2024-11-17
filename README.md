@@ -1,8 +1,6 @@
 # 🔥 MCRT: A Universal Foundation Model for Transfer Learning in Molecular Crystals 🚀
 This repository hosts **Molecular Crystal Representation from Transformers (MCRT)**, a transformer-based model designed for property prediction of molecular crystals. Pre-trained on over 700,000 experimental structures from the Cambridge Crystallographic Data Centre (CCDC), MCRT extracts both local and global representations of crystals using multi-modal features, achieving state-of-the-art performance on various property prediction tasks with minimal fine-tuning. Explore this repository to accelerate your research in molecular crystal discovery and functionality prediction.
-<div style="display: flex; justify-content: space-around; align-items: center;">
-  <img src="MCRT/assets/overall3.png" alt="Atomic attention" width="700"/>
-</div>
+![alt text](MCRT/assets/overall3.png)
 
 ## Install
 #### Option 1: Directly install
