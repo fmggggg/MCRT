@@ -15,6 +15,10 @@ conda activate MCRT
 cd /path/to/MCRT
 pip install -r requirements.txt
 ```
+4. Install MCRT
+```python
+pip install MCRT-tools==1.0.1
+```
 #### Option 2: Via Apptainer (easier and faster)
 It would be easier to use Apptainer [(install from here)](https://apptainer.org/docs/user/main/quick_start.html) because you don't have to deal with any unexpected errors when you install the environment. You only have to install apptainer, and we provided the pre-defined images [here](https://figshare.com/articles/online_resource/Containers_for_MCRT_and_moleculetda/26390275).
 
@@ -31,12 +35,11 @@ pip install moleculetda tqdm numpy
 Usage:
 ```python
 conda activate persistent
-cd /path/to/moleculetda/src
 python /path/to/cif_to_image.py --cif_path ../cifs/your_cif_folder --paral 16
 ```
 You can parallal the generation by setting --paral.
 ##### Option 2: Via Apptainer (easier and faster)
-Download the pre-defined image [here]().
+Download the pre-defined image [here](https://figshare.com/articles/online_resource/Containers_for_MCRT_and_moleculetda/26390275).
 Usage:
 ```python
 cd /path/to/moleculetda
@@ -107,13 +110,13 @@ if __name__ == '__main__':
              mean=mean, std=std )
 ```
 Usage:
-make a python file named finetune.py under the root dir of MCRT, and run it as module:
+make a python file named finetune.py and run it:
 ```python
 conda activate MCRT
-cd /path/to/MCRT
-python -m MCRT.finetune
+python /path/to/finetune.py
 ```
 ## To test finetuned model
+Set test_only as True, also set test_to_csv to True if you want to save the test results
 ```python
 import MCRT
 import os
@@ -148,9 +151,15 @@ if __name__ == '__main__':
              mean=mean, std=std )
 ```
 Usage:
-make a python file named test_model.py under the root dir of MCRT, and run it as module:
+make a python file named test_model.py and run it:
 ```python
 conda activate MCRT
-cd /path/to/MCRT
-python -m MCRT.test_model
+python /path/to/test_model.py
 ```
+
+## Attention score visualization
+<div style="display: flex; justify-content: space-around; align-items: center;">
+  <img src="MCRT/assets/atomic_attention.png" alt="Atomic attention" width="200"/>
+  <img src="MCRT/assets/image_attention_1D.png" alt="1D persistence image attention" width="200"/>
+  <img src="MCRT/assets/image_attention_2D.png" alt="2D persistence Atomic attention" width="200"/>
+</div>

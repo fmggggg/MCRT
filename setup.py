@@ -1,8 +1,8 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='MCRT', 
-    version='1.0.0',  
+    name='MCRT-tools', 
+    version='1.0.1',  
     packages=find_packages(),  
     description='Molecular Crystal Representation from Transformer', 
     long_description=open('README.md').read(), 
