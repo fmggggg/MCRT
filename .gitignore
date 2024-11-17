@@ -2,8 +2,6 @@
 __pycache__/
 *.py[cod]
 *$py.class
-logs/
-cifs/
 visualize/results/
 compared_models/Crystal-Twins
 # C extensions
