@@ -638,18 +638,24 @@ class Dataset(torch.utils.data.Dataset):
             # Exclude the current point itself
             all_indices_sorted = all_indices_sorted[all_indices_sorted != i]
             all_distances_sorted = all_distances_sorted[1:]  # Skip the first element (self)
-
+            
             # Step 2: Determine the distance of the nth nearest neighbor
-            n_nbr_distance = all_distances_sorted[n_nbr - 1]  # Distance of the nth neighbor
+            if len(all_distances_sorted) < n_nbr:
+                n_nbr_distance = all_distances_sorted[-1]  # Use the last available distance if less than n_nbr
+                # Directly select list of nearest neighbors
+                nearest_neighbors_indices = all_indices_sorted
+                nearest_distances = all_distances_sorted
+            else:
+                n_nbr_distance = all_distances_sorted[n_nbr - 1]  # Distance of the nth neighbor
 
-            # Step 3: Extend neighbors if further points have a distance within the threshold
-            extended_count = n_nbr
-            while extended_count < len(all_distances_sorted) and abs(all_distances_sorted[extended_count] - n_nbr_distance) < distance_threshold:
-                extended_count += 1
+                # Step 3: Extend neighbors if further points have a distance within the threshold
+                extended_count = n_nbr
+                while extended_count < len(all_distances_sorted) and abs(all_distances_sorted[extended_count] - n_nbr_distance) < distance_threshold:
+                    extended_count += 1
 
-            # Step 4: Select the extended list of nearest neighbors
-            nearest_neighbors_indices = all_indices_sorted[:extended_count]
-            nearest_distances = all_distances_sorted[:extended_count]
+                # Step 4: Select the extended list of nearest neighbors
+                nearest_neighbors_indices = all_indices_sorted[:extended_count]
+                nearest_distances = all_distances_sorted[:extended_count]
 
             # Step 5: Group neighbors by identical distances (within threshold)
             distance_groups = []
@@ -744,7 +750,11 @@ class Dataset(torch.utils.data.Dataset):
                 return None
             else:
                 atom_num = [site.specie.Z for site in structure]
-                angles_list= self.get_nearest_neighbors_cos_angles(structure=structure, n_nbr=8)
+                if self.pos_emb=='relative' or self.pos_emb=='both':
+                    angles_list= self.get_nearest_neighbors_cos_angles(structure=structure, n_nbr=8)
+                else:
+                    angles_list=None
+                    
                 crystal_data={
                     "structure":structure,
                     "atom_num":atom_num,
