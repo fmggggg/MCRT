@@ -134,6 +134,11 @@ if __name__ == '__main__':
 ```
 Usage:
 make a python file named finetune.py and run it:
+1. With Apptainer:
+```python
+apptainer exec /path/to/moleculetda_container.sif python /path/to/finetune.py
+```
+2. Directly run
 ```python
 conda activate MCRT
 python /path/to/finetune.py
@@ -176,6 +181,11 @@ if __name__ == '__main__':
 ```
 Usage:
 make a python file named test_model.py and run it:
+1. With Apptainer:
+```python
+apptainer exec /path/to/moleculetda_container.sif python /path/to/test_model.py
+```
+2. Directly run
 ```python
 conda activate MCRT
 python /path/to/test_model.py
@@ -200,6 +210,11 @@ vis.draw_image_2d(top_n=10)
 ```
 Usage:
 make a python file named visual.py and run it:
+1. With Apptainer:
+```python
+apptainer exec /path/to/moleculetda_container.sif python /path/to/visual.py
+```
+2. Directly run
 ```python
 conda activate MCRT
 python /path/to/visual.py
