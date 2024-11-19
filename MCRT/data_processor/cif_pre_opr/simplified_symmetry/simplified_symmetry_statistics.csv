@@ -1,0 +1,8 @@
+Column,Count of Ones,Frequency of Ones
+p1,7055,0.00999
+inversion_center,171518,0.2429
+mirror_plane,13241,0.01875
+rotation_axis,69982,0.09911
+screw_axis,407718,0.5774
+anti_axes,5551,0.00786
+glide_plane,396101,0.56095

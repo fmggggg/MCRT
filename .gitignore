@@ -3,11 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 visualize/results/
-compared_models/Crystal-Twins
+MCRT/compared_models/Crystal-Twins
 # C extensions
 *.zip
 *.so
-*.csv
 *.out
 *.sh
 *.xyz
