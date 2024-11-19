@@ -39,8 +39,7 @@ Download the pre-defined image [here](https://figshare.com/articles/online_resou
 Usage:
 
 ```python
-cd /path/to/moleculetda
-apptainer exec /path/to/moleculetda_container.sif python3 /path/to/cif_to_image.py --cif_path /path/to/cif_path
+apptainer exec /path/to/moleculetda_container.sif python3 /path/to/cif_to_image.py --cif_path /path/to/cif_path --paral 16
 ```
 
 #### Option 2: Directly install
