@@ -136,7 +136,7 @@ Usage:
 make a python file named finetune.py and run it:
 1. With Apptainer:
 ```python
-apptainer exec /path/to/moleculetda_container.sif python /path/to/finetune.py
+apptainer exec /path/to/MCRT_container.sif python /path/to/finetune.py
 ```
 2. Directly run
 ```python
@@ -183,7 +183,7 @@ Usage:
 make a python file named test_model.py and run it:
 1. With Apptainer:
 ```python
-apptainer exec /path/to/moleculetda_container.sif python /path/to/test_model.py
+apptainer exec /path/to/MCRT_container.sif python /path/to/test_model.py
 ```
 2. Directly run
 ```python
@@ -212,7 +212,7 @@ Usage:
 make a python file named visual.py and run it:
 1. With Apptainer:
 ```python
-apptainer exec /path/to/moleculetda_container.sif python /path/to/visual.py
+apptainer exec /path/to/MCRT_container.sif python /path/to/visual.py
 ```
 2. Directly run
 ```python
