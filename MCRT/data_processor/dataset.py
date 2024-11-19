@@ -343,35 +343,6 @@ class Dataset(torch.utils.data.Dataset):
         cosine_angle = np.clip(cosine_angle, -1, 1) #adjust wrong values due to limited precision
         return cosine_angle
 
-    # def get_nearest_neighbors_cos_angles(self, structure, n_nbr=8):
-    #     cos_angles_list = []
-    #     for i, site in enumerate(structure):
-    #         neighbors = structure.get_neighbors(site, r=max(structure.lattice.a,structure.lattice.b,structure.lattice.c)/2, include_index=True)
-    #         neighbors.sort(key=lambda x: x[1])
-    #         nearest_neighbors = neighbors[:n_nbr]
-    #         cos_angles = []
-    #         total_expected_angles = sum(range(n_nbr))
-    #         # Calculate actual angles
-    #         for j in range(n_nbr - 1):  # This ensures up to 7 loops for 8 neighbors
-    #             actual_angles_this_round = 0
-    #             for k in range(j + 1, len(nearest_neighbors)):
-    #                 vec1 = nearest_neighbors[j][0].coords - site.coords
-    #                 vec2 = nearest_neighbors[k][0].coords - site.coords
-    #                 cos_angle = self.calculate_cosine_angle(vec1, vec2)
-    #                 cos_angles.append(cos_angle)
-    #                 actual_angles_this_round += 1
-                
-    #             # Dynamic padding for missing angles in this round
-    #             expected_angles_this_round = n_nbr - 1 - j
-    #             missing_angles_this_round = expected_angles_this_round - actual_angles_this_round
-    #             cos_angles.extend([-100] * missing_angles_this_round)
-
-    #         total_actual_angles = len(cos_angles)
-    #         if total_actual_angles < total_expected_angles:
-    #             cos_angles.extend([-100] * (total_expected_angles - total_actual_angles))
-    #         cos_angles_list.append(cos_angles)
-
-    #     return cos_angles_list
 
     def shuffle_structure_and_get_graph(self,crystal_data):
         """
@@ -437,8 +408,6 @@ class Dataset(torch.utils.data.Dataset):
 
         # positional embedding
         if self.pos_emb=='relative':
-            # #bond angle list
-            # angles_list=self.get_nearest_neighbors_cos_angles(structure=shuffled_structure, n_nbr=8)#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!for code test only
             original_angles_list = crystal_data["angles_list"]
             angles_list = [original_angles_list[i] for i in indices]
             angles_list = torch.Tensor(angles_list)
@@ -448,8 +417,6 @@ class Dataset(torch.utils.data.Dataset):
             abs_pos=torch.Tensor(abs_pos)
             angles_list=None
         elif self.pos_emb=='both':
-            # #bond angle list
-            # angles_list=self.get_nearest_neighbors_cos_angles(structure=shuffled_structure, n_nbr=8)#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!for code test only
             original_angles_list = crystal_data["angles_list"]
             angles_list = [original_angles_list[i] for i in indices]
             angles_list = torch.Tensor(angles_list)
@@ -543,81 +510,6 @@ class Dataset(torch.utils.data.Dataset):
         except Exception as e:
             print(f"Error during symmetry operation: {e}", file=sys.stderr)
     
-
-    # pseudo code for angle matrix
-    # function get_nearest_neighbors_cos_angles(structure, n_nbr, distance_threshold):
-    #     initialize empty list cos_angles_list
-
-    #     for each atom i in structure:
-    #         # Step 1: Sort all neighbors by distance
-    #         all_indices_sorted = sort_indices_by_distance(distance_matrix[i])
-    #         all_distances_sorted = distances_of_sorted_indices(distance_matrix[i], all_indices_sorted)
-
-    #         # Exclude the current atom itself from the neighbors
-    #         remove_self(all_indices_sorted, all_distances_sorted)
-
-    #         # Step 2: Get the distance of the nth nearest neighbor
-    #         n_nbr_distance = all_distances_sorted[n_nbr - 1]
-
-    #         # Step 3: Extend neighbors to include all atoms within the threshold distance from nth neighbor
-    #         extended_count = n_nbr
-    #         while extended_count < len(all_distances_sorted) and |all_distances_sorted[extended_count] - n_nbr_distance| < distance_threshold:
-    #             extended_count += 1
-
-    #         # Select the extended list of nearest neighbors
-    #         nearest_neighbors_indices = all_indices_sorted[:extended_count]
-    #         nearest_distances = all_distances_sorted[:extended_count]
-
-    #         # Step 4: Group neighbors by similar distances (within threshold)
-    #         initialize empty lists distance_groups and group_indices
-    #         for each distance in nearest_distances:
-    #             if no existing group within threshold:
-    #                 group_indices_for_distance = find_indices_within_threshold(nearest_distances, distance)
-    #                 add group_indices_for_distance to group_indices
-    #                 add nearest_distances[group_indices_for_distance] to distance_groups
-
-    #         # Step 5: Precompute the middle vector and internal average cosine angle for each group
-    #         initialize empty dictionaries group_middle_vectors and group_internal_cos_angles
-    #         for each group in group_indices:
-    #             if group has multiple points:
-    #                 vectors = compute_vectors_to_atom(i, group)
-    #                 unit_vectors = normalize_each_vector(vectors)
-    #                 middle_vector = sum(unit_vectors)
-                    
-    #                 if middle_vector is approximately zero:
-    #                     set middle_vector to [0.0, 0.0, 0.0]
-                    
-    #                 # Calculate the internal squared average angle and take cosine
-    #                 internal_cos_angle = compute_internal_cos_angle(vectors)
-                    
-    #                 store middle_vector in group_middle_vectors
-    #                 store internal_cos_angle in group_internal_cos_angles
-    #             else:
-    #                 # For single atom group
-    #                 store vector in group_middle_vectors
-    #                 set internal_cos_angle to 1 in group_internal_cos_angles
-
-    #         # Step 6: Calculate cosine angles between neighbors
-    #         initialize empty list cos_angles
-    #         for each pair (j, k) of neighbors up to n_nbr:
-    #             if j and k are in the same group:
-    #                 cos_angle = group_internal_cos_angles for that group
-    #             else if j or k belongs to a group with a middle vector:
-    #                 if middle vector is zero:
-    #                     cos_angle = -100  # Padding value for undefined angles
-    #                 else:
-    #                     cos_angle = cosine of angle between middle vector and vector to other neighbor
-    #             else:
-    #                 cos_angle = cosine of angle between vectors to both neighbors
-
-    #             if cos_angle is undefined:
-    #                 cos_angle = -100  # Apply padding if undefined
-
-    #             append cos_angle to cos_angles
-
-    #         append cos_angles to cos_angles_list
-
-    #     return cos_angles_list
 
     @staticmethod
     def get_nearest_neighbors_cos_angles(structure, n_nbr=8, distance_threshold=1e-3):
