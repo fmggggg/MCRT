@@ -24,7 +24,7 @@ conda activate MCRT
 ```python
 cd /path/to/MCRT
 pip install -r requirements.txt
-pip install MCRT-tools==1.0.1
+pip install MCRT-tools
 ```
 
 ## [Prepare dataset]()
@@ -62,18 +62,23 @@ python /path/to/cif_to_image.py --cif_path ../cifs/your_cif_folder --paral 16
 You can parallal the generation by setting --paral.
 
 ### Prepare pickles (optional)
+
 Pickles include the pre-calculated positional embedding matrix and pre-training labels. It's an optional procedure for finetuning now because we have implemented the generation of graphs in real time for finetuneing. But for pretraining, the label for tasks are time-consuming to generate, it should be generated like this:
+
 ```python
 conda activate MCRT
 python /path/to/cif_to_dataset.py --cif_path /path/to/cif_path --paral 16 --type pretrain 
 ```
+
 You can generate pickle for fintuning too, which may be a little bit faster than generating them in real time. But it depends on your CPU and GPU, since the generation is on CPU, if your CPU is fast or GPU is slow, there would be no difference since the bottleneck is the model training on GPU. If you want to generate pickles for finetuning:
 
 ```python
 conda activate MCRT
 python /path/to/cif_to_dataset.py --cif_path /path/to/cif_path --paral 16 --type finetune 
 ```
+
 ### dataset split
+
 The dataset split is defined by a json file named dataset_split.json:
 
 ```json
@@ -83,12 +88,15 @@ The dataset split is defined by a json file named dataset_split.json:
   "test": ["LUMSER","DUGXUY"],
 }
 ```
+
 One can generate it by yourself or by using split_dataset.py which we provided.
+
 ```python
 python /path/to/split_dataset.py --cif /path/to/cif_path --split 0.8 0.1 0.1
 ```
 
 ### dataset structure
+
 When you finished the generation above, you should make sure the dataset structure is like this:
 
 ```
@@ -99,8 +107,11 @@ your_dataset/
 ├── dataset_split.json
 └── downstream.csv
 ```
+
 ## [To fineture]()
+
 You can download pre-trained MCRT and finetuned models in the paper via figshare [here](https://figshare.com/articles/online_resource/Pretrained_MCRT_models/27822705)
+
 ```python
 import MCRT
 import os
@@ -132,20 +143,27 @@ if __name__ == '__main__':
              test_to_csv = test_to_csv,\
              mean=mean, std=std )
 ```
+
 Usage:
 make a python file named finetune.py and run it:
+
 1. With Apptainer:
+
 ```python
 apptainer exec /path/to/MCRT_container.sif python /path/to/finetune.py
 ```
+
 2. Directly run
+
 ```python
 conda activate MCRT
 python /path/to/finetune.py
 ```
 
 ## [To test finetuned model]()
+
 Set test_only as True, also set test_to_csv to True if you want to save the test results
+
 ```python
 import MCRT
 import os
@@ -179,22 +197,29 @@ if __name__ == '__main__':
              test_to_csv = test_to_csv,\
              mean=mean, std=std )
 ```
+
 Usage:
 make a python file named test_model.py and run it:
+
 1. With Apptainer:
+
 ```python
 apptainer exec /path/to/MCRT_container.sif python /path/to/test_model.py
 ```
+
 2. Directly run
+
 ```python
 conda activate MCRT
 python /path/to/test_model.py
 ```
 
 ## [Attention score visualization]()
+
 MCRT takes atomic graph (local) and persistence image patches (global) as input, the model structure is shown below:
 ![alt text](MCRT/assets/MCRT.png)
 The attention score on each atom and patch can be visualized as below:
+
 ```python
 from MCRT.visualize import PatchVisualizer
 import os
@@ -208,17 +233,23 @@ vis.draw_graph()
 vis.draw_image_1d(top_n=10)
 vis.draw_image_2d(top_n=10)
 ```
+
 Usage:
 make a python file named visual.py and run it:
+
 1. With Apptainer:
+
 ```python
 apptainer exec /path/to/MCRT_container.sif python /path/to/visual.py
 ```
+
 2. Directly run
+
 ```python
 conda activate MCRT
 python /path/to/visual.py
 ```
+
 <div style="display: flex; justify-content: space-around; align-items: center;">
   <img src="MCRT/assets/atomic_attention.png" alt="Atomic attention" width="250"/>
   <img src="MCRT/assets/image_attention_1D.png" alt="1D persistence image attention" width="250"/>
@@ -226,4 +257,5 @@ python /path/to/visual.py
 </div>
 
 ## [Acknowledgement]()
+
 This repo is built upon the previous work MOFTransformer's [codebase](https://github.com/hspark1212/MOFTransformer). Thank you very much for the excellent codebase.
