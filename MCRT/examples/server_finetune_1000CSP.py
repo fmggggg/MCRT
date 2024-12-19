@@ -14,8 +14,6 @@ max_epochs = 50
 batch_size = 32  # desired batch size; for gradient accumulation
 per_gpu_batchsize = 8
 num_workers = 12
-mean = 6.886 # 1000CSP
-std = 6.801
 test_only = True
 test_to_csv = True
 learning_rate = 1e-4
@@ -32,4 +30,4 @@ if __name__ == '__main__':
              test_to_csv = test_to_csv,\
              learning_rate = learning_rate, \
           #    resume_from=resume_from,\
-             mean=mean, std=std )
+              )
